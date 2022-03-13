@@ -21,9 +21,17 @@ RUN mkdir -p /home/kaimahi/
 RUN chown -R kaimahi:kaimahi /home/kaimahi
 ENV HOME /home/kaimahi
 
-# Install python + other things
+# Install apt packages
 RUN apt update
-RUN apt install -y python3-dev python3-pip
+RUN apt install -y awscli curl software-properties-common
+RUN add-apt-repository ppa:deadsnakes/ppa
+
+# Install python
+ENV PYTHON_VERSION 3.9
+RUN apt update
+RUN apt install -y python${PYTHON_VERSION}-dev python${PYTHON_VERSION}-distutils
+RUN rm /usr/bin/python3 && ln -s /usr/bin/python${PYTHON_VERSION} /usr/bin/python3
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python${PYTHON_VERSION}
 
 RUN pip3 install --upgrade pip
 COPY requirements.txt /root/requirements.txt
