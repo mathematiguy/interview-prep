@@ -1,0 +1,4 @@
+outs:
+- md5: d39b42d54d6ae2e006acc81b79b4cc8d
+  size: 768287
+  path: data_task_1.csv
